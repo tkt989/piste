@@ -1,0 +1,7 @@
+{
+  "dailyMemo.displayName": "デイリーメモ",
+  "dailyMemo.description": "デイリーメモを作成・表示・検索します。",
+  "dailyMemo.command.openToday": "今日のデイリーメモを開く",
+  "dailyMemo.command.search": "デイリーメモを検索",
+  "dailyMemo.configuration.directory.description": "デイリーメモを保存する絶対パスです。~ はホームディレクトリに展開されます。"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "daily-memo",
+  "displayName": "%dailyMemo.displayName%",
+  "description": "%dailyMemo.description%",
+  "version": "0.0.7",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:dailyMemo.openToday",
+    "onCommand:dailyMemo.search"
+  ],
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dailyMemo.openToday",
+        "title": "%dailyMemo.command.openToday%"
+      },
+      {
+        "command": "dailyMemo.search",
+        "title": "%dailyMemo.command.search%"
+      }
+    ],
+    "configuration": {
+      "title": "Daily Memo",
+      "properties": {
+        "dailyMemo.directory": {
+          "type": "string",
+          "default": "~/.daily-memo",
+          "scope": "window",
+          "description": "%dailyMemo.configuration.directory.description%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "@vscode/ripgrep": "^1.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}
