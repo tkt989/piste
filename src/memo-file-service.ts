@@ -3,7 +3,10 @@ import * as vscode from 'vscode';
 
 export class MemoFileService {
   async getOrCreateToday(directory: string, suffix: string): Promise<vscode.Uri> {
-    const date = formatLocalDate(new Date());
+    return this.getOrCreate(directory, formatLocalDate(new Date()), suffix);
+  }
+
+  async getOrCreate(directory: string, date: string, suffix: string): Promise<vscode.Uri> {
     const trimmedSuffix = suffix.trim();
     const fileName = trimmedSuffix
       ? `${date}-${sanitizeFileName(trimmedSuffix)}.md`

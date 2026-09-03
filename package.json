@@ -1,8 +1,14 @@
 {
-  "name": "daily-memo",
-  "displayName": "%dailyMemo.displayName%",
-  "description": "%dailyMemo.description%",
-  "version": "0.0.7",
+  "name": "piste",
+  "publisher": "tkt989",
+  "displayName": "%piste.displayName%",
+  "description": "%piste.description%",
+  "license": "MIT",
+  "version": "0.0.17",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tkt989/piste.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -10,30 +16,59 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:dailyMemo.openToday",
-    "onCommand:dailyMemo.search"
+    "onCommand:piste.openToday",
+    "onCommand:piste.openByDate",
+    "onCommand:piste.search",
+    "onCommand:piste.clearSearchResults"
   ],
   "main": "./out/extension.js",
   "l10n": "./l10n",
   "contributes": {
     "commands": [
       {
-        "command": "dailyMemo.openToday",
-        "title": "%dailyMemo.command.openToday%"
+        "command": "piste.openToday",
+        "title": "%piste.command.openToday%"
       },
       {
-        "command": "dailyMemo.search",
-        "title": "%dailyMemo.command.search%"
+        "command": "piste.openByDate",
+        "title": "%piste.command.openByDate%"
+      },
+      {
+        "command": "piste.search",
+        "title": "%piste.command.search%"
+      },
+      {
+        "command": "piste.clearSearchResults",
+        "title": "%piste.command.clearSearchResults%",
+        "icon": "$(close)"
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "piste.clearSearchResults",
+          "when": "view == piste.searchResults",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "piste.searchResults",
+          "name": "%piste.view.searchResults%",
+          "when": "piste.hasSearchResults"
+        }
+      ]
+    },
     "configuration": {
       "title": "Daily Memo",
       "properties": {
-        "dailyMemo.directory": {
+        "piste.directory": {
           "type": "string",
           "default": "~/.daily-memo",
           "scope": "window",
-          "description": "%dailyMemo.configuration.directory.description%"
+          "description": "%piste.configuration.directory.description%"
         }
       }
     }

@@ -5,6 +5,7 @@ export interface MemoEntry {
   readonly filePath: string;
   readonly fileName: string;
   readonly relativePath: string;
+  readonly lineNumber: number;
   readonly preview: string;
 }
 

@@ -6,7 +6,7 @@ export class MemoDirectoryResolver {
   async resolve(): Promise<string | undefined> {
     const directory = expandHomeDirectory(
       vscode.workspace
-        .getConfiguration('dailyMemo')
+        .getConfiguration('piste')
         .get<string>('directory', '~/.daily-memo')
         .trim(),
     );
@@ -18,7 +18,7 @@ export class MemoDirectoryResolver {
     const openSettings = vscode.l10n.t('Open Settings');
     const action = await vscode.window.showErrorMessage(
       vscode.l10n.t(
-        'Set an absolute path in the "dailyMemo.directory" setting before using Daily Memo.',
+        'Set an absolute path in the "piste.directory" setting before using Daily Memo.',
       ),
       openSettings,
     );
@@ -26,7 +26,7 @@ export class MemoDirectoryResolver {
     if (action === openSettings) {
       await vscode.commands.executeCommand(
         'workbench.action.openSettings',
-        'dailyMemo.directory',
+        'piste.directory',
       );
     }
 

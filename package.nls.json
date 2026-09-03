@@ -1,7 +1,10 @@
 {
-  "dailyMemo.displayName": "Daily Memo",
-  "dailyMemo.description": "Create, open, and search daily memo files.",
-  "dailyMemo.command.openToday": "Open Today's Daily Memo",
-  "dailyMemo.command.search": "Search Daily Memos",
-  "dailyMemo.configuration.directory.description": "Absolute path where daily memos are stored. ~ expands to the home directory."
+  "piste.displayName": "Daily Memo",
+  "piste.description": "Create, open, and search daily memo files.",
+  "piste.command.openToday": "Open Today's Daily Memo",
+  "piste.command.openByDate": "Open Daily Memo by Date",
+  "piste.command.search": "Search Daily Memos",
+  "piste.command.clearSearchResults": "Close Daily Memo Search Results",
+  "piste.view.searchResults": "Daily Memo Search Results",
+  "piste.configuration.directory.description": "Absolute path where daily memos are stored. ~ expands to the home directory."
 }

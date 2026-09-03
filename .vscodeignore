@@ -1,0 +1,15 @@
+.git/**
+.vscode/**
+.vscode-test/**
+src/**
+scripts/**
+skills/**
+dist/**
+Dockerfile.vsce
+.dockerignore
+.gitignore
+package-lock.json
+tsconfig.json
+release-plan.html
+*.vsix
+out/**/*.map

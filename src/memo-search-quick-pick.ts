@@ -1,56 +1,72 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import * as vscode from 'vscode';
+import { MemoSearchResultsProvider } from './memo-search-results-provider';
 import type { MemoEntry, MemoQuickPickItem } from './memo-types';
 import { RipgrepContentSearch } from './ripgrep-content-search';
 
 const SEARCH_DEBOUNCE_MS = 200;
 
 export class MemoSearchQuickPick {
-  constructor(private readonly contentSearch: RipgrepContentSearch) {}
+  constructor(
+    private readonly contentSearch: RipgrepContentSearch,
+    private readonly resultsProvider: MemoSearchResultsProvider,
+    private readonly resultsView: vscode.TreeView<MemoEntry>,
+  ) {}
 
   show(directory: string): void {
     const quickPick = vscode.window.createQuickPick<MemoQuickPickItem>();
-    const searchPlaceholder = vscode.l10n.t('Enter a search term');
     let activeProcess: ChildProcessWithoutNullStreams | undefined;
     let debounceTimer: NodeJS.Timeout | undefined;
     let searchId = 0;
     let disposed = false;
+    let currentEntries: MemoEntry[] = [];
 
     quickPick.title = vscode.l10n.t('Search daily memo contents');
-    quickPick.placeholder = searchPlaceholder;
+    quickPick.placeholder = vscode.l10n.t('Enter a search term');
     quickPick.matchOnDescription = true;
     quickPick.matchOnDetail = true;
     quickPick.show();
 
     const search = async (query: string): Promise<void> => {
+      const normalizedQuery = query.trim();
       const currentSearchId = ++searchId;
       activeProcess?.kill();
       activeProcess = undefined;
 
-      if (!query.trim()) {
+      if (!normalizedQuery) {
+        currentEntries = [];
         quickPick.items = [];
         quickPick.busy = false;
-        quickPick.placeholder = searchPlaceholder;
+        this.resultsProvider.setLoading('');
+        this.resultsView.message = this.resultsProvider.message;
         return;
       }
 
+      this.resultsProvider.setLoading(normalizedQuery);
+      this.resultsView.message = vscode.l10n.t('Searching "{0}"…', normalizedQuery);
       quickPick.busy = true;
-      quickPick.placeholder = vscode.l10n.t('Searching memo contents…');
-      const task = this.contentSearch.start(directory, query.trim());
-      activeProcess = task.process;
 
       try {
+        const task = this.contentSearch.start(directory, normalizedQuery);
+        activeProcess = task.process;
         const entries = await task.result;
         if (!disposed && currentSearchId === searchId) {
+          currentEntries = entries;
+          this.resultsProvider.setResults(normalizedQuery, entries);
+          this.resultsView.message = this.resultsProvider.message;
           quickPick.items = entries.map(toQuickPickItem);
-          quickPick.placeholder = entries.length === 0
-            ? vscode.l10n.t('No matching memo contents found.')
-            : searchPlaceholder;
+          if (entries[0]) {
+            void Promise.resolve(
+              this.resultsView.reveal(entries[0], { focus: false, select: true }),
+            ).catch(() => undefined);
+          }
         }
       } catch {
         if (!disposed && currentSearchId === searchId) {
+          currentEntries = [];
+          this.resultsProvider.setResults(normalizedQuery, []);
+          this.resultsView.message = vscode.l10n.t('Search failed.');
           quickPick.items = [];
-          quickPick.placeholder = vscode.l10n.t('Unable to search the memo directory.');
         }
       } finally {
         if (!disposed && currentSearchId === searchId) {
@@ -67,11 +83,9 @@ export class MemoSearchQuickPick {
       debounceTimer = setTimeout(() => void search(value), SEARCH_DEBOUNCE_MS);
     });
     quickPick.onDidAccept(() => {
-      const selected = quickPick.selectedItems[0];
-      if (selected) {
-        void openMemo(vscode.Uri.file(selected.entry.filePath)).catch(() => {
-          void vscode.window.showWarningMessage(vscode.l10n.t('The selected memo no longer exists.'));
-        });
+      const entry = quickPick.selectedItems[0]?.entry ?? currentEntries[0];
+      if (entry) {
+        void vscode.commands.executeCommand('piste.openSearchResult', entry);
       }
       quickPick.hide();
     });
@@ -88,14 +102,10 @@ export class MemoSearchQuickPick {
 
 function toQuickPickItem(entry: MemoEntry): MemoQuickPickItem {
   return {
-    label: entry.fileName,
-    description: entry.relativePath === entry.fileName ? undefined : entry.relativePath,
-    detail: entry.preview,
+    label: entry.preview || entry.fileName,
+    description: `${entry.fileName} · ${vscode.l10n.t('Line {0}', entry.lineNumber)}`,
+    detail: entry.relativePath,
+    alwaysShow: true,
     entry,
   };
-}
-
-async function openMemo(uri: vscode.Uri): Promise<void> {
-  const document = await vscode.workspace.openTextDocument(uri);
-  await vscode.window.showTextDocument(document);
 }
