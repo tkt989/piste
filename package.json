@@ -17,9 +17,7 @@
   ],
   "activationEvents": [
     "onCommand:piste.openToday",
-    "onCommand:piste.openByDate",
-    "onCommand:piste.search",
-    "onCommand:piste.clearSearchResults"
+    "onCommand:piste.openByDate"
   ],
   "main": "./out/extension.js",
   "l10n": "./l10n",
@@ -32,35 +30,8 @@
       {
         "command": "piste.openByDate",
         "title": "%piste.command.openByDate%"
-      },
-      {
-        "command": "piste.search",
-        "title": "%piste.command.search%"
-      },
-      {
-        "command": "piste.clearSearchResults",
-        "title": "%piste.command.clearSearchResults%",
-        "icon": "$(close)"
       }
     ],
-    "menus": {
-      "view/title": [
-        {
-          "command": "piste.clearSearchResults",
-          "when": "view == piste.searchResults",
-          "group": "navigation"
-        }
-      ]
-    },
-    "views": {
-      "explorer": [
-        {
-          "id": "piste.searchResults",
-          "name": "%piste.view.searchResults%",
-          "when": "piste.hasSearchResults"
-        }
-      ]
-    },
     "configuration": {
       "title": "Daily Memo",
       "properties": {
@@ -76,9 +47,6 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
-  },
-  "dependencies": {
-    "@vscode/ripgrep": "^1.18.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

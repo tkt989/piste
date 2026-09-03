@@ -1,19 +1,10 @@
 import * as vscode from 'vscode';
 import { MemoDirectoryResolver } from './memo-directory-resolver';
 import { MemoFileService } from './memo-file-service';
-import { MemoSearchQuickPick } from './memo-search-quick-pick';
-import { MemoSearchResultsProvider } from './memo-search-results-provider';
-import type { MemoEntry } from './memo-types';
-import { RipgrepContentSearch } from './ripgrep-content-search';
 
 export function activate(context: vscode.ExtensionContext): void {
   const directoryResolver = new MemoDirectoryResolver();
   const memoFiles = new MemoFileService();
-  const contentSearch = new RipgrepContentSearch();
-  const searchResults = new MemoSearchResultsProvider();
-  const searchResultsView = vscode.window.createTreeView<MemoEntry>('piste.searchResults', {
-    treeDataProvider: searchResults,
-  });
 
   const openTodayMemo = vscode.commands.registerCommand(
     'piste.openToday',
@@ -31,28 +22,6 @@ export function activate(context: vscode.ExtensionContext): void {
       const memoUri = await memoFiles.getOrCreateToday(directory, suffix);
       await openMemo(memoUri);
     },
-  );
-
-  const searchMemos = vscode.commands.registerCommand('piste.search', async () => {
-    const directory = await directoryResolver.resolve();
-    if (directory) {
-      await showSearchResultsView();
-      new MemoSearchQuickPick(contentSearch, searchResults, searchResultsView).show(directory);
-    }
-  });
-
-  const clearSearchResults = vscode.commands.registerCommand(
-    'piste.clearSearchResults',
-    async () => {
-      searchResults.clear();
-      searchResultsView.message = undefined;
-      await vscode.commands.executeCommand('setContext', 'piste.hasSearchResults', false);
-    },
-  );
-
-  const openSearchResult = vscode.commands.registerCommand(
-    'piste.openSearchResult',
-    async (entry: MemoEntry) => openMemo(vscode.Uri.file(entry.filePath), entry.lineNumber),
   );
 
   const openMemoByDate = vscode.commands.registerCommand('piste.openByDate', async () => {
@@ -78,16 +47,7 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     openTodayMemo,
     openMemoByDate,
-    searchMemos,
-    clearSearchResults,
-    openSearchResult,
-    searchResultsView,
   );
-}
-
-async function showSearchResultsView(): Promise<void> {
-  await vscode.commands.executeCommand('setContext', 'piste.hasSearchResults', true);
-  await vscode.commands.executeCommand('workbench.view.explorer');
 }
 
 async function requestMemoSuffix(): Promise<string | undefined> {

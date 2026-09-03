@@ -6,14 +6,5 @@
   "Enter a date in YYYY-MM-DD format": "日付を YYYY-MM-DD 形式で入力してください",
   "Example: 2026-08-28": "例: 2026-08-28",
   "Enter a real date in YYYY-MM-DD format.": "実在する日付を YYYY-MM-DD 形式で入力してください。",
-  "Search daily memo contents": "デイリーメモの本文を検索",
-  "Enter a search term": "検索する語句を入力",
-  "Enter a search term to search your daily memos.": "検索する語句を入力してください。",
-  "Searching \"{0}\"…": "\"{0}\" を検索中…",
-  "{0} results for \"{1}\"": "\"{1}\" の検索結果: {0}件",
-  "No results for \"{0}\"": "\"{0}\" に一致するメモはありません。",
-  "Search failed.": "検索に失敗しました。",
-  "Line {0}": "{0}行目",
-  "Open search result": "検索結果を開く",
-  "The selected memo no longer exists.": "選択したメモは存在しません。"
+  "Enter a real date in YYYY-MM-DD format.": "実在する日付を YYYY-MM-DD 形式で入力してください。"
 }

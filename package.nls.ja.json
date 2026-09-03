@@ -1,10 +1,7 @@
 {
   "piste.displayName": "デイリーメモ",
-  "piste.description": "デイリーメモを作成・表示・検索します。",
+  "piste.description": "デイリーメモを作成・表示します。",
   "piste.command.openToday": "今日のデイリーメモを開く",
   "piste.command.openByDate": "日付を指定してデイリーメモを開く",
-  "piste.command.search": "デイリーメモを検索",
-  "piste.command.clearSearchResults": "デイリーメモの検索結果を閉じる",
-  "piste.view.searchResults": "デイリーメモの検索結果",
   "piste.configuration.directory.description": "デイリーメモを保存する絶対パスです。~ はホームディレクトリに展開されます。"
 }
