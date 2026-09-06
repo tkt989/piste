@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
+import { MarkdownSearchQuickPick } from './markdown-search-quick-pick';
+import { MarkdownDirectorySearch } from './markdown-directory-search';
 import { MemoDirectoryResolver } from './memo-directory-resolver';
 import { MemoFileService } from './memo-file-service';
 
 export function activate(context: vscode.ExtensionContext): void {
   const directoryResolver = new MemoDirectoryResolver();
   const memoFiles = new MemoFileService();
+  const markdownSearch = new MarkdownSearchQuickPick(new MarkdownDirectorySearch());
 
   const openTodayMemo = vscode.commands.registerCommand(
     'piste.openToday',
@@ -44,9 +47,17 @@ export function activate(context: vscode.ExtensionContext): void {
     await openMemo(memoUri);
   });
 
+  const searchMemos = vscode.commands.registerCommand('piste.searchMemos', async () => {
+    const directory = await directoryResolver.resolve();
+    if (directory) {
+      markdownSearch.show(directory);
+    }
+  });
+
   context.subscriptions.push(
     openTodayMemo,
     openMemoByDate,
+    searchMemos,
   );
 }
 

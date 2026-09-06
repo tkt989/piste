@@ -17,7 +17,8 @@
   ],
   "activationEvents": [
     "onCommand:piste.openToday",
-    "onCommand:piste.openByDate"
+    "onCommand:piste.openByDate",
+    "onCommand:piste.searchMemos"
   ],
   "main": "./out/extension.js",
   "l10n": "./l10n",
@@ -30,6 +31,10 @@
       {
         "command": "piste.openByDate",
         "title": "%piste.command.openByDate%"
+      },
+      {
+        "command": "piste.searchMemos",
+        "title": "%piste.command.searchMemos%"
       }
     ],
     "configuration": {

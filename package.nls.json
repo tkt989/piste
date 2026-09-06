@@ -3,5 +3,6 @@
   "piste.description": "Create and open daily memo files.",
   "piste.command.openToday": "Open Today's Daily Memo",
   "piste.command.openByDate": "Open Daily Memo by Date",
+  "piste.command.searchMemos": "Search Memos",
   "piste.configuration.directory.description": "Absolute path where daily memos are stored. ~ expands to the home directory."
 }

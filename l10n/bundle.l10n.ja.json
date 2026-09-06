@@ -6,5 +6,6 @@
   "Enter a date in YYYY-MM-DD format": "日付を YYYY-MM-DD 形式で入力してください",
   "Example: 2026-08-28": "例: 2026-08-28",
   "Enter a real date in YYYY-MM-DD format.": "実在する日付を YYYY-MM-DD 形式で入力してください。",
-  "Enter a real date in YYYY-MM-DD format.": "実在する日付を YYYY-MM-DD 形式で入力してください。"
+  "Search Markdown in Piste Directory": "Piste ディレクトリ内の Markdown を検索",
+  "Search markdown...": "Markdown を検索..."
 }
