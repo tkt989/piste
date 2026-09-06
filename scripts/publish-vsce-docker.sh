@@ -1,8 +1,17 @@
 #!/usr/bin/env sh
 set -eu
 
+if [ ! -f .env ]; then
+  echo ".env ファイルを作成し、VSCE_PAT を設定してください。" >&2
+  exit 1
+fi
+
+set -a
+. ./.env
+set +a
+
 if [ -z "${VSCE_PAT:-}" ]; then
-  echo "VSCE_PAT を環境変数に設定してください。" >&2
+  echo ".env に VSCE_PAT を設定してください。" >&2
   exit 1
 fi
 
