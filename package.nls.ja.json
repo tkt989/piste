@@ -1,5 +1,5 @@
 {
-  "piste.displayName": "デイリーメモ",
+  "piste.displayName": "Piste",
   "piste.description": "デイリーメモを作成・表示します。",
   "piste.command.openToday": "今日のデイリーメモを開く",
   "piste.command.openByDate": "日付を指定してデイリーメモを開く",

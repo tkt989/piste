@@ -1,5 +1,5 @@
 {
-  "Set an absolute path in the \"piste.directory\" setting before using Daily Memo.": "デイリーメモを使う前に、設定 \"piste.directory\" に絶対パスを指定してください。",
+  "Set an absolute path in the \"piste.directory\" setting before using Piste.": "Piste を使う前に、設定 \"piste.directory\" に絶対パスを指定してください。",
   "Open Settings": "設定を開く",
   "Enter an optional name for this memo": "メモの名前を入力してください（省略可）",
   "Example: review": "例: 振り返り",

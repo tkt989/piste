@@ -18,7 +18,7 @@ export class MemoDirectoryResolver {
     const openSettings = vscode.l10n.t('Open Settings');
     const action = await vscode.window.showErrorMessage(
       vscode.l10n.t(
-        'Set an absolute path in the "piste.directory" setting before using Daily Memo.',
+        'Set an absolute path in the "piste.directory" setting before using Piste.',
       ),
       openSettings,
     );

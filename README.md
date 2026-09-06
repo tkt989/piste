@@ -1,6 +1,6 @@
-# Daily Memo
+# Piste
 
-Daily Memo is a Visual Studio Code extension for creating, opening, and searching daily Markdown notes outside of a workspace.
+Piste is a Visual Studio Code extension for creating, opening, and searching daily Markdown notes outside of a workspace.
 
 ## Setup
 
@@ -8,8 +8,8 @@ Set `piste.directory` to the directory where you keep your memos. The default is
 
 ## Commands
 
-- **Open Today's Daily Memo** — creates or opens today's memo.
-- **Open Daily Memo by Date** — creates or opens a memo for a specified date.
+- **Open Today's Memo** — creates or opens today's memo.
+- **Open Memo by Date** — creates or opens a memo for a specified date.
 - **Search Memos** — searches Markdown files under `piste.directory`.
 
 ## Search memos

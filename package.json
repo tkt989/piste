@@ -38,7 +38,7 @@
       }
     ],
     "configuration": {
-      "title": "Daily Memo",
+      "title": "Piste",
       "properties": {
         "piste.directory": {
           "type": "string",
