@@ -4,7 +4,7 @@
   "displayName": "%piste.displayName%",
   "description": "%piste.description%",
   "license": "MIT",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "repository": {
     "type": "git",
     "url": "https://github.com/tkt989/piste.git"
