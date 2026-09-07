@@ -13,3 +13,4 @@ tsconfig.json
 release-plan.html
 *.vsix
 out/**/*.map
+.env
