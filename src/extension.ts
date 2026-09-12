@@ -81,15 +81,13 @@ async function requestMemoDate(): Promise<string | undefined> {
   return value?.trim();
 }
 
-async function openMemo(uri: vscode.Uri, lineNumber?: number): Promise<void> {
+async function openMemo(uri: vscode.Uri): Promise<void> {
   const document = await vscode.workspace.openTextDocument(uri);
   const editor = await vscode.window.showTextDocument(document);
 
-  if (lineNumber !== undefined) {
-    const position = new vscode.Position(Math.max(lineNumber - 1, 0), 0);
-    editor.selection = new vscode.Selection(position, position);
-    editor.revealRange(new vscode.Range(position, position), vscode.TextEditorRevealType.InCenter);
-  }
+  const position = document.lineAt(document.lineCount - 1).range.end;
+  editor.selection = new vscode.Selection(position, position);
+  editor.revealRange(new vscode.Range(position, position), vscode.TextEditorRevealType.InCenter);
 }
 
 function formatLocalDate(date: Date): string {
