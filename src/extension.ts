@@ -6,7 +6,7 @@ import { MemoFileService } from './memo-file-service';
 
 export function activate(context: vscode.ExtensionContext): void {
   const directoryResolver = new MemoDirectoryResolver();
-  const memoFiles = new MemoFileService();
+  const memoFiles = new MemoFileService(context);
   const markdownSearch = new MarkdownSearchQuickPick(new MarkdownDirectorySearch());
 
   const openTodayMemo = vscode.commands.registerCommand(

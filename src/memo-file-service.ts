@@ -1,7 +1,10 @@
 import * as path from 'node:path';
 import * as vscode from 'vscode';
+import * as os from 'node:os';
 
 export class MemoFileService {
+  constructor(private context: vscode.ExtensionContext) {}
+
   async getOrCreateToday(directory: string, suffix: string): Promise<vscode.Uri> {
     return this.getOrCreate(directory, formatLocalDate(new Date()), suffix);
   }
@@ -17,8 +20,12 @@ export class MemoFileService {
     await vscode.workspace.fs.createDirectory(directoryUri);
 
     if (!(await this.exists(memoUri))) {
-      const title = trimmedSuffix ? `# ${date} - ${trimmedSuffix}\n\n` : `# ${date}\n\n`;
-      await vscode.workspace.fs.writeFile(memoUri, Buffer.from(title, 'utf8'));
+      const content = await this.getExpandedTemplate(new Map([
+        ['date', date],
+        ['suffix', trimmedSuffix],
+        ['title', trimmedSuffix ? `${date} - ${trimmedSuffix}` : date]
+      ]));
+      await vscode.workspace.fs.writeFile(memoUri, Buffer.from(content, 'utf8'));
     }
 
     return memoUri;
@@ -34,6 +41,28 @@ export class MemoFileService {
       }
       throw error;
     }
+  }
+
+  private async getExpandedTemplate(variables: Map<string, string>): Promise<string> {
+    const content = await this.getTemplateContent();
+
+    return content.replace(/\{\{(\w+)\}\}/g, (_, key) => variables.get(key) ?? '');
+  }
+
+  private async getTemplateContent(): Promise<string> {
+    const templateFile = vscode.Uri.file(path.join(os.homedir(),  ".config/piste/template.md"))
+
+    if (await this.exists(templateFile)) {
+      const templateContent = await vscode.workspace.fs.readFile(templateFile);
+      return Buffer.from(templateContent).toString('utf8');
+    }
+
+    const resourcesTemplatePath = await this.getResourcesTemplatePath();
+    return Buffer.from(await vscode.workspace.fs.readFile(resourcesTemplatePath)).toString('utf8');
+  }
+
+  private async getResourcesTemplatePath(): Promise<vscode.Uri> {
+    return vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'template.md');
   }
 }
 
