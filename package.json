@@ -45,7 +45,14 @@
           "default": "~/.daily-memo",
           "scope": "window",
           "description": "%piste.configuration.directory.description%"
+        },
+        "piste.templateFile": {
+          "type": "string",
+          "default": "~/.config/piste/template.md",
+          "scope": "window",
+          "description": "%piste.configuration.templateFile.description%"
         }
+
       }
     }
   },

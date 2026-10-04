@@ -4,5 +4,6 @@
   "piste.command.openToday": "Piste: Open Today's Memo",
   "piste.command.openByDate": "Piste: Open Memo by Date",
   "piste.command.searchMemos": "Piste: Search Memos",
-  "piste.configuration.directory.description": "Absolute path where daily memos are stored. ~ expands to the home directory."
+  "piste.configuration.directory.description": "Absolute path where memos are stored. ~ expands to the home directory.",
+  "piste.configuration.templateFile.description": "Path to the template file for new memos."
 }

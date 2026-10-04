@@ -4,5 +4,6 @@
   "piste.command.openToday": "Piste: 今日のデイリーメモを開く",
   "piste.command.openByDate": "Piste: 日付を指定してデイリーメモを開く",
   "piste.command.searchMemos": "Piste: メモを検索",
-  "piste.configuration.directory.description": "デイリーメモを保存する絶対パスです。~ はホームディレクトリに展開されます。"
+  "piste.configuration.directory.description": "メモを保存する絶対パスです。~ はホームディレクトリに展開されます。",
+  "piste.configuration.templateFile.description": "新しいメモに使うテンプレートファイルのパスです。"
 }
