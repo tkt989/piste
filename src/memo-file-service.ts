@@ -50,7 +50,7 @@ export class MemoFileService {
   }
 
   private async getTemplateContent(): Promise<string> {
-    const templateFile = vscode.Uri.file(path.join(os.homedir(),  '.config/piste/template.md'))
+    const templateFile = this.getTemplateFile();
 
     if (await this.exists(templateFile)) {
       const templateContent = await vscode.workspace.fs.readFile(templateFile);
@@ -59,6 +59,14 @@ export class MemoFileService {
 
     const resourcesTemplatePath = this.getResourcesTemplatePath();
     return Buffer.from(await vscode.workspace.fs.readFile(resourcesTemplatePath)).toString('utf8');
+  }
+
+  private getTemplateFile(): vscode.Uri {
+    const templateFile = (vscode.workspace.getConfiguration('piste').get<string>('templateFile') ?? '').trim();
+
+    return vscode.Uri.file(templateFile.startsWith('~/') || templateFile.startsWith('~\\')
+      ? path.join(os.homedir(), templateFile.slice(2))
+      : templateFile);
   }
 
   private getResourcesTemplatePath(): vscode.Uri {
