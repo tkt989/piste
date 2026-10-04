@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/stop-lint.cjs\"",
+            "timeout": 30,
+            "statusMessage": "Running ESLint"
+          }
+        ]
+      }
+    ]
+  }
+}

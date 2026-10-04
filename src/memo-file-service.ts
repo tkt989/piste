@@ -46,22 +46,22 @@ export class MemoFileService {
   private async getExpandedTemplate(variables: Map<string, string>): Promise<string> {
     const content = await this.getTemplateContent();
 
-    return content.replace(/\{\{(\w+)\}\}/g, (_, key) => variables.get(key) ?? '');
+    return content.replace(/\{\{(\w+)\}\}/g, (_, key: string) => variables.get(key) ?? '');
   }
 
   private async getTemplateContent(): Promise<string> {
-    const templateFile = vscode.Uri.file(path.join(os.homedir(),  ".config/piste/template.md"))
+    const templateFile = vscode.Uri.file(path.join(os.homedir(),  '.config/piste/template.md'))
 
     if (await this.exists(templateFile)) {
       const templateContent = await vscode.workspace.fs.readFile(templateFile);
       return Buffer.from(templateContent).toString('utf8');
     }
 
-    const resourcesTemplatePath = await this.getResourcesTemplatePath();
+    const resourcesTemplatePath = this.getResourcesTemplatePath();
     return Buffer.from(await vscode.workspace.fs.readFile(resourcesTemplatePath)).toString('utf8');
   }
 
-  private async getResourcesTemplatePath(): Promise<vscode.Uri> {
+  private getResourcesTemplatePath(): vscode.Uri {
     return vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'template.md');
   }
 }

@@ -109,5 +109,3 @@ function isValidDate(value: string): boolean {
     && date.getMonth() === month - 1
     && date.getDate() === day;
 }
-
-export function deactivate(): void {}

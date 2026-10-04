@@ -60,7 +60,7 @@ export class MarkdownDirectorySearch {
       const lines = content.split(/\r?\n/);
       const normalizedQuery = query.toLocaleLowerCase();
       const results: MarkdownSearchResult[] = [];
-      const headings: Array<string | undefined> = [];
+      const headings: (string | undefined)[] = [];
 
       for (
         let lineIndex = 0;
@@ -95,7 +95,7 @@ export class MarkdownDirectorySearch {
   }
 }
 
-function updateHeadings(headings: Array<string | undefined>, line: string): void {
+function updateHeadings(headings: (string | undefined)[], line: string): void {
   const match = /^(#{1,6})\s+(.+?)\s*#*\s*$/.exec(line);
   if (!match) {
     return;
